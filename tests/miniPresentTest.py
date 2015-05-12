@@ -45,7 +45,7 @@ def run_for_lab():
         decrypted_text = cipher.decrypt(encrypted_text)
         result = ResultHolder(decrypted_text, key, encrypted_text)
         results.append(result)
-        result_file.write(str(result))
+        result_file.writelines(str(result))
     coincidence_holder = CoincidenceHolder(results)
     coincidence_holder.check_coincidences()
     result_map = {}
@@ -63,13 +63,13 @@ def run_for_lab():
     line_chart.y_title = 'Number of identical numbers sets'
     for key, value in result_map.items():
         if value == 1:
-            result_file.write(("%d equal values were met %d time") % (key, value))
+            result_file.writelines(("%d equal values were met %d time") % (key, value))
         else:
-            result_file.write(("%d equal values were met %d times") % (key, value))
+            result_file.writelines(("%d equal values were met %d times") % (key, value))
         all_values_amount += key * value
     line_chart.x_labels = map(str, result_map.keys())
     line_chart.add('coincidence', result_map.values())
-    result_file.write(("all values amount = %d") % all_values_amount)
+    result_file.writelines(("all values amount = %d") % all_values_amount)
     line_chart.render_to_file('coincidence_chart.svg')
     return results, coincidence_holder, result_map
 
@@ -79,9 +79,9 @@ def test_all():
     plain_1 = 0
     plain_2 = "1"
     plain_3 = "2"
-    result_file.write(str(plain_1))
-    result_file.write(plain_2)
-    result_file.write(plain_3)
+    result_file.writelines(str(plain_1))
+    result_file.writelines(plain_2)
+    result_file.writelines(plain_3)
     cipher = MiniPresent(key)
     encrypted_1 = cipher.encrypt(plain_1)
     encrypted_2 = cipher.encrypt(plain_2)
@@ -89,9 +89,9 @@ def test_all():
     enc_1 = encrypted_1
     enc_2 = encrypted_2.encode('hex')
     enc_3 = encrypted_3.encode('hex')
-    result_file.write(str(enc_1))
-    result_file.write(enc_2)
-    result_file.write(enc_3)
+    result_file.writelines(str(enc_1))
+    result_file.writelines(enc_2)
+    result_file.writelines(enc_3)
 
     decrypted_1 = cipher.decrypt(encrypted_1)
     decrypted_2 = cipher.decrypt(encrypted_2)
@@ -99,9 +99,9 @@ def test_all():
     decr_1 = decrypted_1
     decr_2 = decrypted_2.encode('hex')
     decr_3 = decrypted_3.encode('hex')
-    result_file.write(str(decr_1))
-    result_file.write(decr_2.decode('hex'))
-    result_file.write(decr_3.decode('hex'))
+    result_file.writelines(str(decr_1))
+    result_file.writelines(decr_2.decode('hex'))
+    result_file.writelines(decr_3.decode('hex'))
 
     results = run_for_lab()
     result_file.close()
