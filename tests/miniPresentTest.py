@@ -14,7 +14,7 @@ class ResultHolder(object):
         self.encrypted_text = encrypted_text
 
     def __unicode__(self):
-        return u'plain_text = %s | key = %s | encrypted_text = %s' % (
+        return u'plain_text = %s | key = %s | encrypted_text = %s\n' % (
             str(self.plain_text), str(self.key), str(self.encrypted_text))
 
     def __str__(self):
@@ -63,13 +63,13 @@ def run_for_lab():
     line_chart.y_title = 'Number of identical numbers sets'
     for key, value in result_map.items():
         if value == 1:
-            result_file.writelines(("%d equal values were met %d time") % (key, value))
+            result_file.writelines(("%d equal values were met %d time\n") % (key, value))
         else:
-            result_file.writelines(("%d equal values were met %d times") % (key, value))
+            result_file.writelines(("%d equal values were met %d times\n") % (key, value))
         all_values_amount += key * value
     line_chart.x_labels = map(str, result_map.keys())
     line_chart.add('coincidence', result_map.values())
-    result_file.writelines(("all values amount = %d") % all_values_amount)
+    result_file.writelines(("all values amount = %d\n") % all_values_amount)
     line_chart.render_to_file('coincidence_chart.svg')
     return results, coincidence_holder, result_map
 
