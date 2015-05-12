@@ -99,7 +99,7 @@ def test_all():
     decr_1 = decrypted_1
     decr_2 = decrypted_2.encode('hex')
     decr_3 = decrypted_3.encode('hex')
-    result_file.write(decr_1)
+    result_file.write(str(decr_1))
     result_file.write(decr_2.decode('hex'))
     result_file.write(decr_3.decode('hex'))
 
