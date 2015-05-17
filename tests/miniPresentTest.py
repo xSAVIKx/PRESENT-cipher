@@ -36,6 +36,34 @@ class CoincidenceHolder(object):
                 self.coincidence_map[result.encrypted_text] = 1
 
 
+def test_enc_all_open_texts():
+    KEYS_MAX_LENGTH = 2 << 16 - 1
+    OPEN_TEXTS_MAX_LENGTH = 2 << 8 - 1
+    results = [[0 for col in xrange(0, OPEN_TEXTS_MAX_LENGTH + 1)] for row in xrange(0, KEYS_MAX_LENGTH + 1)]
+    print "result len=%d" % len(results)
+    print "result[0] len=%d" % len(results[0])
+    for init in xrange(0, OPEN_TEXTS_MAX_LENGTH):
+        results[init + 1][0] = init
+        results[0][init + 1] = init
+    for init in xrange(OPEN_TEXTS_MAX_LENGTH + 1, KEYS_MAX_LENGTH):
+        results[init + 1][0] = init
+    # open texts are on top
+    results[0][0] = '#'
+    print("init ended")
+    for open_text in xrange(0, OPEN_TEXTS_MAX_LENGTH):
+        for key in xrange(0, KEYS_MAX_LENGTH):
+            cipher = MiniPresent(key)
+            encrypted_text = cipher.encrypt(open_text)
+            results[encrypted_text + 1][open_text + 1] += 1
+    print("results received. writing to the file")
+    with open('./all_texts.log', 'w+') as all_texts_file:
+        all_texts_file.write('\t\t\tOPEN TEXTS\n')
+        for i in results:
+            for j in i:
+                all_texts_file.write('{0}'.format(str(j).rjust(5)))
+            all_texts_file.write('\n')
+
+
 def run_for_lab():
     results = []
     plain_text = 0
@@ -109,3 +137,4 @@ def test_all():
 
 if __name__ == "__main__":
     test_all()
+    # test_enc_all_open_texts()
