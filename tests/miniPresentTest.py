@@ -39,15 +39,12 @@ class CoincidenceHolder(object):
 def test_enc_all_open_texts():
     KEYS_MAX_LENGTH = 2 << 16 - 1
     OPEN_TEXTS_MAX_LENGTH = 2 << 8 - 1
-    results = [[0 for col in xrange(0, OPEN_TEXTS_MAX_LENGTH + 1)] for row in xrange(0, KEYS_MAX_LENGTH + 1)]
+    results = [[0 for col in xrange(0, OPEN_TEXTS_MAX_LENGTH + 1)] for row in xrange(0, OPEN_TEXTS_MAX_LENGTH+ 1)]
     print "result len=%d" % len(results)
     print "result[0] len=%d" % len(results[0])
     for init in xrange(0, OPEN_TEXTS_MAX_LENGTH):
         results[init + 1][0] = init
         results[0][init + 1] = init
-    for init in xrange(OPEN_TEXTS_MAX_LENGTH + 1, KEYS_MAX_LENGTH):
-        results[init + 1][0] = init
-    # open texts are on top
     results[0][0] = '#'
     print("init ended")
     for open_text in xrange(0, OPEN_TEXTS_MAX_LENGTH):
@@ -56,7 +53,7 @@ def test_enc_all_open_texts():
             encrypted_text = cipher.encrypt(open_text)
             results[encrypted_text + 1][open_text + 1] += 1
     print("results received. writing to the file")
-    with open('./all_texts.log', 'w+') as all_texts_file:
+    with open('./all_texts.txt', 'w+') as all_texts_file:
         all_texts_file.write('\t\t\tOPEN TEXTS\n')
         for i in results:
             for j in i:
@@ -105,31 +102,31 @@ def run_for_lab():
 def test_all():
     key = 0x0
     plain_1 = 0
-    plain_2 = "1"
-    plain_3 = "2"
+    plain_2 = 255
+    plain_3 = 1025
     result_file.writelines(str(plain_1))
-    result_file.writelines(plain_2)
-    result_file.writelines(plain_3)
+    result_file.writelines(str(plain_2))
+    result_file.writelines(str(plain_3))
     cipher = MiniPresent(key)
     encrypted_1 = cipher.encrypt(plain_1)
     encrypted_2 = cipher.encrypt(plain_2)
     encrypted_3 = cipher.encrypt(plain_3)
     enc_1 = encrypted_1
-    enc_2 = encrypted_2.encode('hex')
-    enc_3 = encrypted_3.encode('hex')
+    enc_2 = encrypted_2
+    enc_3 = encrypted_3
     result_file.writelines(str(enc_1))
-    result_file.writelines(enc_2)
-    result_file.writelines(enc_3)
+    result_file.writelines(str(enc_2))
+    result_file.writelines(str(enc_3))
 
     decrypted_1 = cipher.decrypt(encrypted_1)
     decrypted_2 = cipher.decrypt(encrypted_2)
     decrypted_3 = cipher.decrypt(encrypted_3)
     decr_1 = decrypted_1
-    decr_2 = decrypted_2.encode('hex')
-    decr_3 = decrypted_3.encode('hex')
+    decr_2 = decrypted_2
+    decr_3 = decrypted_3
     result_file.writelines(str(decr_1))
-    result_file.writelines(decr_2.decode('hex'))
-    result_file.writelines(decr_3.decode('hex'))
+    result_file.writelines(str(decr_2))
+    result_file.writelines(str(decr_3))
 
     results = run_for_lab()
     result_file.close()
@@ -137,4 +134,4 @@ def test_all():
 
 if __name__ == "__main__":
     test_all()
-    # test_enc_all_open_texts()
+    test_enc_all_open_texts()

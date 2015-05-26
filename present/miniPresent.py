@@ -55,7 +55,7 @@ def generateRoundkeys16(key, rounds):
     roundkeys = []
     for i in xrange(1, rounds + 1):  # (K1 ... K32)
         # rawkey: used in comments to show what happens at bitlevel
-        roundkeys.append((key >> 8))
+        roundkeys.append((key >> 8)&0xFF)
         # 1. Shift
         key = ((key & (2 ** 9 - 1)) << 7) + (key >> 9)
         # 2. SBox
