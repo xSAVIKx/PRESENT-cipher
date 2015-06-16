@@ -13,15 +13,17 @@ def generate_16_bits():
 
 
 def test_n1():
+    tests_amount = 100
+    keys_amount = 2 << 16
     n1_max_average = 0
     n1_ghash_max_average = 0
-    for i in xrange(10):
+    for i in xrange(tests_amount):
         n1_list = []
         n1_ghash_list = []
-        for j in xrange(10):
+        for j in xrange(tests_amount):
             n1 = 0
             n1_ghash = 0
-            for key in xrange(2 << 16):
+            for key in xrange(keys_amount):
                 IV1 = generate_IV()
                 IV2 = generate_IV()
                 while (IV1 == IV2):
@@ -43,8 +45,8 @@ def test_n1():
             n1_ghash_list.append(n1_ghash)
         n1_max_average += max(n1_list)
         n1_ghash_max_average += max(n1_ghash_list)
-    n1_max_average /= 10
-    n1_ghash_max_average /= 10
+    n1_max_average /= tests_amount
+    n1_ghash_max_average /= tests_amount
     return (n1_max_average, n1_ghash_max_average)
 
 
