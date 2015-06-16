@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='present',
     version='0.0.1',
-    packages=['present'],
+    packages=['present', 'gmac'],
     url='https://github.com/xSAVIKx/present',
     license='',
     author='Iurii Sergiichuk',
