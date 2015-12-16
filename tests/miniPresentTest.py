@@ -1,5 +1,6 @@
 # coding=utf-8
 import pygal
+
 from present.miniPresent import MiniPresent
 
 __author__ = 'Iurii Sergiichuk'
@@ -7,11 +8,33 @@ __author__ = 'Iurii Sergiichuk'
 result_file = open('./results.txt', 'w+')
 
 
+class EncryptedTextResultHolder(object):
+    def __init__(self, encrypted_text):
+        """
+        :type encrypted_text str
+        """
+        self.encrypted_text = encrypted_text
+        self.inversions_amount = self.check_inversions()
+
+    def check_inversions(self):
+        inversions_amount = 0
+        textToCheck = self.encrypted_text
+        lst = [int(i) for i in str(textToCheck)]
+        for i in xrange(1, len(lst)):
+            valueToCheck = lst[i]
+            for j in xrange(0, i):
+                value = lst[j]
+                if valueToCheck < value:
+                    inversions_amount += 1
+        return inversions_amount
+
+
 class ResultHolder(object):
     def __init__(self, plain_text, key, encrypted_text):
         self.plain_text = plain_text
         self.key = key
         self.encrypted_text = encrypted_text
+        self.encrypted_text_holder = EncryptedTextResultHolder(encrypted_text)
 
     def __unicode__(self):
         return u'plain_text = %s | key = %s | encrypted_text = %s\n' % (
@@ -39,7 +62,7 @@ class CoincidenceHolder(object):
 def test_enc_all_open_texts():
     KEYS_MAX_LENGTH = 2 << 16 - 1
     OPEN_TEXTS_MAX_LENGTH = 2 << 8 - 1
-    results = [[0 for col in xrange(0, OPEN_TEXTS_MAX_LENGTH + 1)] for row in xrange(0, OPEN_TEXTS_MAX_LENGTH+ 1)]
+    results = [[0 for col in xrange(0, OPEN_TEXTS_MAX_LENGTH + 1)] for row in xrange(0, OPEN_TEXTS_MAX_LENGTH + 1)]
     print "result len=%d" % len(results)
     print "result[0] len=%d" % len(results[0])
     for init in xrange(0, OPEN_TEXTS_MAX_LENGTH):
@@ -96,6 +119,9 @@ def run_for_lab():
     line_chart.add('coincidence', result_map.values())
     result_file.writelines(("all values amount = %d\n") % all_values_amount)
     line_chart.render_to_file('coincidence_chart.svg')
+
+
+    #TODO render inversion into svg chart
     return results, coincidence_holder, result_map
 
 
