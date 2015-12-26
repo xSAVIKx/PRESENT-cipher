@@ -1,5 +1,4 @@
-02551025431221002551
-plain_text = 0 | key = 0 | encrypted_text = 43
+02551025431221002551plain_text = 0 | key = 0 | encrypted_text = 43
 plain_text = 0 | key = 1 | encrypted_text = 105
 plain_text = 0 | key = 2 | encrypted_text = 54
 plain_text = 0 | key = 3 | encrypted_text = 36

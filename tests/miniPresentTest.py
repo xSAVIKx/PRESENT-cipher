@@ -120,8 +120,7 @@ def run_for_lab():
     result_file.writelines(("all values amount = %d\n") % all_values_amount)
     line_chart.render_to_file('coincidence_chart.svg')
 
-
-    #TODO render inversion into svg chart
+    # TODO render inversion into svg chart
     return results, coincidence_holder, result_map
 
 
