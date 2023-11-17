@@ -1,0 +1,18 @@
+[project]
+name = "PRESENTER-cipher"
+version = "0.0.3"
+authors = [
+  { name="Iurii Sergiichuk", email="aiurii.sergiichuk@gmail.com" },
+  { name="Florin Dinu" },
+]
+description = "python implementation of PRESENT cipher and minified version with 16-bit key and 8-bit block, implementation of GMAC using minified python algorithm as cipher"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/xSAVIKx/PRESENT-cipher"
